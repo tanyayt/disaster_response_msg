@@ -75,7 +75,7 @@ def save_data(df,database_filepath):
 def main():
 
         if len(sys.argv)==4:
-            messages_filepath,categories_filepath,database_filepath = sys.argv[1]
+            messages_filepath,categories_filepath,database_filepath = sys.argv[1:]
        
             print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'.format(messages_filepath, categories_filepath))
             df = load_data(messages_filepath, categories_filepath)
