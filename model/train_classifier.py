@@ -84,6 +84,11 @@ def build_model():
     
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    Print out prediction accuracy scores on test set
+    Args: a trained model, test data set and category_names in predicted outcomes 
+    Returns: None
+    '''
     
     Y_test_predicted=model.predict(X_test)
     
@@ -94,6 +99,11 @@ def evaluate_model(model, X_test, Y_test, category_names):
         print("-"*30)
 
 def save_model(model, model_filepath):
+    '''
+    Save model in a pickle file
+    Args: a trained model and desired filename/filepath
+    Returns: None
+    '''
     pickle.dump(model, open(model_filepath, 'wb'))
     
 
