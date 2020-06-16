@@ -19,10 +19,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report, accuracy_score
 
-# Deafault database filepath and model file path 
-# Edit default paths as needed
-my_database_filepath="..\data\disaster_response.db"
-my_model_filepath="trained_model.pkl"
+nltk.download('stopwords')
+
 
 def load_data(database_filepath):
     '''
@@ -54,6 +52,10 @@ def tokenize(text):
     #tokenize text
     tokens = word_tokenize(text)
     
+    #remove stop words
+    tokens =[token for token in tokens if token not in stopwords.words('english')]
+    
+    
     #crate a lemmatizer object 
     lemmatizer = WordNetLemmatizer()
     
@@ -78,9 +80,17 @@ def build_model():
                      ('clf', MultiOutputClassifier(RandomForestClassifier()))
                     ])
     
-    #omit tuning to improve performance
+    # set parameters for tuning 
+    
+    parameters = {'clf__estimator__n_estimators': [25, 50],
+                  'clf__estimator__min_samples_split': [2, 4],
+                  'clf__estimator__criterion': ['entropy', 'gini']
+                 }
+    
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+    
            
-    return pipeline
+    return cv
     
 
 def evaluate_model(model, X_test, Y_test, category_names):
@@ -109,6 +119,9 @@ def save_model(model, model_filepath):
 
 
 def main():
+        
+        
+        
         
         print('Loading data...\n    DATABASE: {}'.format(my_database_filepath))
         X, Y, category_names = load_data(my_database_filepath)
