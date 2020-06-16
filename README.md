@@ -20,7 +20,7 @@ The purpose of this project is to build a web app to classify disaster response 
 
 *   A database file with clean data has already been created and saved as `\data\disaster_response.db`
 
-    *   If needed, you can re-create this database file, using raw data `categories.csv`, `messages.csv` by running `python "data\process_data.py"`. Make sure you set the working directory to the data folder
+    *   If needed, you can re-run the ETL pipleline,using raw data `categories.csv`, `messages.csv` by running `python "data\process_data.py"`. Make sure you set the working directory to the data folder
 
 *   Train and save the model
 
@@ -31,16 +31,26 @@ The purpose of this project is to build a web app to classify disaster response 
 *   Build the web app
     *   Set the working directory to `\app` folder
     *   Run `python run.py`
-    *   Once down, view and try the web app on your browser (http:\\127.0.0.1:800)
+    *   Once down, view and try the web app on your browser (http:\\\127.0.0.1:800)
 
 
 # Files
 
 [`process_data.py`](): this files contains the ETL pipeline
 
+`\image` folder: contains screenshot images
 
+`\model\train_classifier.py`the machine learning pipeline used to fit and evaluate model. The model is saved in a pickle file (not in this directory but you can generate in your local machine)
 
+`\data\process_data.py` stores the ETL pipeline
 
+`\data\messages.csv` and `\data\categories.csv` are raw response message data for training models
+
+`\app` folder: contains files for building web apps 
+
+`\app\templates\*.html`: HTML templates for web app
+
+`\app`\run.py` starts the python server, loads data model, and build the web app
 
 # Acknowledgement
 
