@@ -90,10 +90,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
     for i in range(len(category_names)):
         print('Category: {} '.format(category_names[i]))
         print(classification_report(Y_test.iloc[:, i].values, Y_test_predicted[:, i]))
-        print(accuracy_score(Y_test.iloc[:, i].values, Y_test_predicted[:, i])
+        print(accuracy_score(Y_test.iloc[:, i].values, Y_test_predicted[:, i]))
         print("-"*30)
-    
-
 
 def save_model(model, model_filepath):
     pickle.dump(model, open(model_filepath, 'wb'))
