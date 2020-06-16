@@ -36,21 +36,21 @@ The purpose of this project is to build a web app to classify disaster response 
 
 # Files
 
-[`process_data.py`](): this files contains the ETL pipeline
+*   [`process_data.py`](): this files contains the ETL pipeline
 
-`\image` folder: contains screenshot images
+*   `\image` folder: contains screenshot images
 
-`\model\train_classifier.py`the machine learning pipeline used to fit and evaluate model. The model is saved in a pickle file (not in this directory but you can generate in your local machine)
+*   `\model\train_classifier.py`the machine learning pipeline used to fit and evaluate model. The model is saved in a pickle file (not in this directory but you can generate in your local machine)
 
-`\data\process_data.py` stores the ETL pipeline
+*   `\data\process_data.py` stores the ETL pipeline
 
-`\data\messages.csv` and `\data\categories.csv` are raw response message data for training models
+*   `\data\messages.csv` and `\data\categories.csv` are raw response message data for training models
 
-`\app` folder: contains files for building web apps 
+*   `\app` folder: contains files for building web apps 
 
-`\app\templates\*.html`: HTML templates for web app
+*   `\app\templates\*.html`: HTML templates for web app
 
-`\app`\run.py` starts the python server, loads data model, and build the web app
+*   `\app`\run.py` starts the python server, loads data model, and build the web app
 
 # Acknowledgement
 
