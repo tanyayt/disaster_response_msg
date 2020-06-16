@@ -3,7 +3,6 @@ process csv data and save it in a database
 Input: messages_filepath, categories_filepath, database_filepath
 Output:None
 
-
 '''
 
 # import packages
@@ -80,9 +79,6 @@ def save_data(df,database_filepath):
     df.to_sql(database_tablename, engine, index=False)
    
 def main():
-#     if len(sys.argv) == 4:
-
-#         messages_filepath, categories_filepath, database_filepath = sys.argv[1:]
 
         print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
               .format(messages_filepath, categories_filepath))
@@ -96,14 +92,6 @@ def main():
         
         print('Cleaned data saved to database!')
     
-#     else:
-#         print('Please provide the filepaths of the messages and categories '\
-#               'datasets as the first and second argument respectively, as '\
-#               'well as the filepath of the database to save the cleaned data '\
-#               'to as the third argument. \n\nExample: python process_data.py '\
-#               'messages.csv categories.csv '\
-#               'disaster_response.db')
-
 
 if __name__ == '__main__':
     main()
