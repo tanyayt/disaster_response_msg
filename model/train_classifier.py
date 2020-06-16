@@ -9,6 +9,7 @@ import pickle
 
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.multioutput import MultiOutputClassifier
@@ -82,9 +83,9 @@ def build_model():
     
     # set parameters for tuning 
     
-    parameters = {'clf__estimator__n_estimators': [25, 50],
-                  'clf__estimator__min_samples_split': [2, 4],
-                  'clf__estimator__criterion': ['entropy', 'gini']
+    parameters = {
+                  'clf__estimator__n_estimators': [50, 100],
+                  'clf__estimator__min_samples_split': [2, 4]
                  }
     
     cv = GridSearchCV(pipeline, param_grid=parameters)
