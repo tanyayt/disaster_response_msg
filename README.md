@@ -31,8 +31,9 @@ The purpose of this project is to build a web app to classify disaster response 
 *   Train and save the model
 
     *   Set the working directory to the `\model` folder
-    *   Run `python train_classifier.py`
-    *   This process can take about 20 minutes and the trained model is saved in `\model` folder as `trained_model.pkl` (~918M)/
+    *   Run `python train_classifier.py../data/DisasterResponse.db classifier.py`
+    *   This process can take about 4 hours and the trained model is saved in `\model` folder as `classifier.pkl` (~918M)
+    *   (Optional) compress 'classifier.pkl' by running `compress_pickle.py classifier.pkl clasifier.pkl`
 
 *   Build the web app
     *   Set the working directory to `\app` folder
@@ -57,6 +58,13 @@ The purpose of this project is to build a web app to classify disaster response 
 *   `\app\templates\*.html`: HTML templates for web app
 
 *   `\app`\run.py` starts the python server, loads data model, and build the web app
+
+
+
+## References 
+
+*   [Compressed Pickle](https://medium.com/better-programming/load-fast-load-big-with-compressed-pickles-5f311584507e)
+*   
 
 # Acknowledgement
 
