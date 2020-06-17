@@ -84,11 +84,12 @@ def build_model():
     # set parameters for tuning 
     
     parameters = {
-                  'clf__estimator__n_estimators': [50, 100],
-                  'clf__estimator__min_samples_split': [2, 4]
+                  'vect__ngram_range': [(1, 1),(1,2)],
+                  'clf__estimator__n_estimators': [20,50]
                  }
     
-    cv = GridSearchCV(pipeline, param_grid=parameters)
+    cv = GridSearchCV(pipeline, param_grid=parameters,cv=None)
+    
     return cv
     
 
@@ -134,8 +135,9 @@ def main():
         print('Building model...')
         model = build_model()
         
-        print('Training model..this may take about 20 minutes')
+        print('Training model..this may take about 4 hours')
         model.fit(X_train, Y_train)
+        print(model.best_params_)
         
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
