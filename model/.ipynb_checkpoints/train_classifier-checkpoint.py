@@ -9,6 +9,7 @@ import pickle
 
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.multioutput import MultiOutputClassifier
@@ -19,10 +20,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report, accuracy_score
 
-# Deafault database filepath and model file path 
-# Edit default paths as needed
-my_database_filepath="..\data\disaster_response.db"
-my_model_filepath="trained_model.pkl"
+nltk.download('stopwords')
+
 
 def load_data(database_filepath):
     '''
@@ -54,6 +53,10 @@ def tokenize(text):
     #tokenize text
     tokens = word_tokenize(text)
     
+    #remove stop words
+    tokens =[token for token in tokens if token not in stopwords.words('english')]
+    
+    
     #crate a lemmatizer object 
     lemmatizer = WordNetLemmatizer()
     
@@ -69,7 +72,7 @@ def tokenize(text):
 def build_model():
     '''
     Args: None
-    Returns: a trained model
+    Returns: a pipeline for model training
     '''
        
     # Build a machine learning pipeline
@@ -78,52 +81,78 @@ def build_model():
                      ('clf', MultiOutputClassifier(RandomForestClassifier()))
                     ])
     
-    #set pramameters for tuning
-    parameters = {'vect__ngram_range': ((1,1),(1, 2))
-            , 'vect__max_df': (0.5, 0.75, 1.0)
-            , 'vect__max_features':(None,50,100,200)
-            , 'tfidf__use_idf': (True, False)
-            , 'clf__estimator__n_estimators': [50, 100, 200]
-            , 'clf__estimator__min_samples_split': [2, 3, 4]
-        }
-
-    # Optimize model using GridSearch 
-    model = GridSearchCV(pipeline,param_grid=parameters)
-        
-    return model
+    # set parameters for tuning 
     
+    parameters = {
+                  'vect__ngram_range': [(1, 1),(1,2)],
+                  'clf__estimator__n_estimators': [10,20,50]
+                 }
+    
+    cv = GridSearchCV(pipeline, param_grid=parameters,cv=None)
+    
+    return cv
     
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
-
+    '''
+    Print out prediction accuracy scores on test set
+    Args: a trained model, test data set and category_names in predicted outcomes 
+    Returns: None
+    '''
+    
+    Y_test_predicted=model.predict(X_test)
+    
+    for i in range(len(category_names)):
+        print('Category: {} '.format(category_names[i]))
+        print(classification_report(Y_test.iloc[:, i].values, Y_test_predicted[:, i]))
+        print(accuracy_score(Y_test.iloc[:, i].values, Y_test_predicted[:, i]))
+        print("-"*30)
 
 def save_model(model, model_filepath):
-    pickle.dump(cv, open(model_filepath, 'wb'))
+    '''
+    Save model in a pickle file
+    Args: a trained model and desired filename/filepath
+    Returns: None
+    '''
+    pickle.dump(model, open(model_filepath, 'wb'))
     
 
 
 def main():
     
-    
-        print('Loading data...\n    DATABASE: {}'.format(my_database_filepath))
-        X, Y, category_names = load_data(my_database_filepath)
+    if len(sys.argv) == 3:
+        database_filepath, model_filepath = sys.argv[1:]
+        print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         
-        
+        X, Y, category_names = load_data(database_filepath)
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)    
+              
+        print('Loading data...\n    DATABASE: {}'.format(database_filepath))
+        X, Y, category_names = load_data(database_filepath)
+                
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
         
         print('Building model...')
         model = build_model()
         
-        print('Training model...')
+        print('Training model..this may take about 4 hours')
         model.fit(X_train, Y_train)
+        print(model.best_params_)
         
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
 
-        print('Saving model...\n    MODEL: {}'.format(my_model_filepath))
-        save_model(model, my_model_filepath)
+        print('Saving model...\n    MODEL: {}'.format(model_filepath))
+        save_model(model, model_filepath)
+        
         print('Trained model saved!')
+    
+    else:
+        print('Please provide the filepath of the disaster messages database '\
+              'as the first argument and the filepath of the pickle file to '\
+              'save the model to as the second argument. \n\nExample: python '\
+              'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
+    
 
 if __name__ == '__main__':
     main()
