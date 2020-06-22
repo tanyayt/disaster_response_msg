@@ -1,9 +1,10 @@
-#import cPickle
+#import packages 
 import sys
 import bz2
 import pickle
 import joblib
 
+# load original pickle file, compress, and save 
 def load_compress(model_filename,compressed_filename):
     '''
     stores a compressed pickle file
@@ -46,8 +47,6 @@ def tokenize(text):
     
     return clean_tokens
 
-    
-    
     
     
 def main():
