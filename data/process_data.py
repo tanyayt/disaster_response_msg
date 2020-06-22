@@ -25,7 +25,7 @@ def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     
-    # merge data on id
+    # inner join data on id
     df=pd.merge(messages,categories,on="id")
     
     return df
