@@ -15,6 +15,7 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
+# still don't know why tokenize has to be in this .py.... 
 def tokenize(text):
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
@@ -29,15 +30,16 @@ def tokenize(text):
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
 df = pd.read_sql_table('disaster_messages', engine)
-print("-----database loaded-----")
+print("-----Database loaded-----")
 
 # load model
 model = joblib.load("../model/classifier.pkl")
-print("-----model loaded------")
+print("-----Model loaded------")
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
+
 def index():
     
     # extract data needed for visuals
@@ -79,7 +81,6 @@ def index():
                 {
                     "type":"histogram",
                     "x": word_counts
-     
                 }
             ],
 
@@ -101,7 +102,8 @@ def index():
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
-    # render web page with plotly graphs
+    # render web page with plotly graphs; by default, it searches the templates 
+    # folder so no need to add '/templates/master.html'
     return render_template('master.html', ids=ids, graphJSON=graphJSON)
 
 
