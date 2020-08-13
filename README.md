@@ -6,11 +6,11 @@ The purpose of this project is to build a web app to classify disaster response 
 
 ## Web App Screenshots
 
-<img src="https://github.com/tanyayt/udacity_data_scientist/blob/master/disaster_response_msg/image/page_top.PNG?raw=true"> 
+<img src="https://github.com/tanyayt/disaster_response_msg/blob/master/image/page_top.PNG?raw=true"> 
 
-<img src="https://github.com/tanyayt/udacity_data_scientist/blob/master/disaster_response_msg/image/dataset_view1.PNG?raw=true">
+<img src="https://github.com/tanyayt/disaster_response_msg/blob/master/image/dataset_view1.PNG?raw=true">
 
-<img src="https://github.com/tanyayt/udacity_data_scientist/blob/master/disaster_response_msg/image/dataset_view2.PNG?raw=true">
+<img src="https://github.com/tanyayt/disaster_response_msg/blob/master/image/dataset_view2.PNG?raw=true">
 
 
 
